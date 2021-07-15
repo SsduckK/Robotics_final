@@ -11,9 +11,6 @@ class SelfDrive:
         self.count = 30
 
     def lds_callback(self, scan):
-        print("scan[0]:", scan.ranges[0])
-        print("scan[270]:", scan.ranges[270])
-        print("scan[90]:", scan.ranges[90])
         turtle_vel = Twist()
 
         forward = (average(scan.ranges[0:18])+average(scan.ranges[342:359]))/2
@@ -29,15 +26,15 @@ class SelfDrive:
             turtle_vel.angular.z = 0
         elif forward < 0.35:
             if semi_right > semi_left:
-                turtle_vel.linear.x = 0.15
-                turtle_vel.angular.z = -0.1
+                turtle_vel.linear.x = 0.05
+                turtle_vel.angular.z = -0.5
                 if right < 0.12:
-                    turtle_vel.angular.z = -0.3
+                    turtle_vel.angular.z = -1
             elif semi_left > semi_right:
-                turtle_vel.linear.x = 0.15
-                turtle_vel.angular.z = 0.1
+                turtle_vel.linear.x = 0.05
+                turtle_vel.angular.z = 0.5
                 if left < 0.12:
-                    turtle_vel.angular.z = 0.3
+                    turtle_vel.angular.z = 1
 
         #self.publisher.publish(turtle_vel)
 
