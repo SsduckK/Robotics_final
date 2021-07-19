@@ -15,7 +15,7 @@ class WallFollower:
         forward = scan.ranges[0]
         left = average(scan.ranges[225:315])
         left_forward = average(scan.ranges[270:315])
-        left_behind = average(scan.ragnes[225:270])
+        left_behind = average(scan.ranges[225:270])
 
         if left >= 0.18 and left <= 0.22:
             turtle_vel.linear.x = 0.15
@@ -48,7 +48,8 @@ class WallFollower:
                 turtle_vel.angular.z = (math.pi/2)
             else:
                 turtle_vel.linear.x = 0.15
-        #self.publisher.publish(turtle_vel)
+        print("forward", forward, '\nleft', left, '\nleft forward', left_forward, '\nleft behind', left_behind)
+        self.publisher.publish(turtle_vel)
 
 
 def average(some_list):
@@ -59,7 +60,7 @@ def main():
     rospy.init_node('Wall_Follower')
     publisher = rospy.Publisher('cmd_vel', Twist, queue_size=1)
     driver = WallFollower(publisher)
-    subscriber = rospy.Subscriber('scan', Laserscan,
+    subscriber = rospy.Subscriber('scan', LaserScan,
                                   lambda scan: driver.lds_callback(scan))
     rospy.spin()
 
