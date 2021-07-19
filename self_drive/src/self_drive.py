@@ -8,7 +8,6 @@ from sensor_msgs.msg import LaserScan
 class SelfDrive:
     def __init__(self, publisher):
         self.publisher = publisher
-        self.count = 30
 
     def lds_callback(self, scan):
         turtle_vel = Twist()
